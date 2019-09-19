@@ -3,22 +3,29 @@ package pageobjects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
 public class MainPage extends BasePage{
 
+    @FindBy(xpath = "//div[@class='carousel_container topproducts']//div[1][@class='owl-item active']/div/a[2]")
+    private WebElement itemBtn;
+
     @FindBy(xpath = "//img[@alt='Высказать Благодарность']")
     private WebElement thankButton;
 
-    @FindBy(xpath ="//*[text()='Помощь']")
+    @FindBy(xpath ="//div[text()='Помощь']")
     private WebElement helpMenuBtn;
 
-    @FindBy(xpath ="//*[text()='Помощь']//..//*[text()='Служба контроля качества']")
+    @FindBy(xpath ="//div[text()='Помощь']//..//a[text()='Служба контроля качества']")
     private WebElement serviceBtn;
 
-    @FindBy(xpath = "//*[@href='https://opt.magazintrav.ru/']")
+    @FindBy(xpath = "//div[text()='Помощь']//..//a[text()='Возврат']")
+    private WebElement returnBtn;
+
+    @FindBy(xpath = "//a[@href='https://opt.magazintrav.ru/']")
     private WebElement wholesaleBtn;
 
     @FindBy(xpath = "//input[@type='search']")
@@ -36,11 +43,12 @@ public class MainPage extends BasePage{
     @FindBy(xpath = "//div[@class='head']//img[@alt='Магазин трав Русские Корни']")
     private WebElement imgHeaderIcons;
 
+    @FindBy(xpath = "//a[@href='#callbackmodal']")
+    private WebElement btnRequestCall;
+
     @FindBy(xpath = "//section[@class='bottom_rk']//a[@href='faq']")
     private WebElement faqLink;
 
-    @FindBy(xpath = "//a[@href='#callbackmodal']")
-    private WebElement btnRequestCall;
 
     public MainPage(WebDriver driver, WebDriverWait driverWait) {
         super(driver, driverWait);
@@ -48,6 +56,11 @@ public class MainPage extends BasePage{
 
     public MainPage(WebDriver driver) {
         super(driver);
+    }
+
+    public ItemPage clickItemBtn() {
+        itemBtn.click();
+        return new ItemPage(driver);
     }
 
     public void typeWordForSearch(String word) {
@@ -67,6 +80,10 @@ public class MainPage extends BasePage{
     public ThankPage openThankPage() {
         thankButton.click();
         return new ThankPage(driver);
+    }
+
+    public WebElement getBtnRequestCall() {
+        return btnRequestCall;
     }
 
     public WebElement getBtnPayForYourOrderOnline() {
@@ -105,6 +122,11 @@ public class MainPage extends BasePage{
     public RequestCallPage clickRequestCall() {
         btnRequestCall.click();
         return new RequestCallPage(driver, driverWait);
+    }
+
+    public ReturnPage clickReturnBtn() {
+        clickButton(returnBtn);
+        return new ReturnPage(driver);
     }
 
 }
